@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import s from './Navigation.module.scss';
 
 const Navigation = () => (
-  <nav className={s.navigation}>
+  <nav>
     <NavLink to="/" className={({ isActive }) => s.link + ' ' + (isActive ? s.activeL : '')}>
       HomePage
     </NavLink>
