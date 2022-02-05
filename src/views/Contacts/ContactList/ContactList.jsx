@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
 import ContactItem from './ContactItem/ContactItem';
-import { useGetContactsQuery } from '../../redux/contact/contact-operation';
+import { useGetContactsQuery } from '../../../redux/contact/contact-operation';
 import { TailSpin } from 'react-loader-spinner';
-import { getFilter } from '../../redux/contact/contact-selectors';
+import { getFilter } from '../../../redux/contact/contact-selectors';
 import { useMemo } from 'react';
 
 import s from './ContactList.module.scss';

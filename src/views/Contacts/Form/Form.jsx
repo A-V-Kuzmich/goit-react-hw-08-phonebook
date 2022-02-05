@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Notification } from '../Notification';
+import { Notification } from '../../../components/Notification';
 import { useCreateContactMutation, useGetContactsQuery } from 'redux/contact/contact-operation';
 
 import s from './Form.module.scss';
