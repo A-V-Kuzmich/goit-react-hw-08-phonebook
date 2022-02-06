@@ -9,33 +9,51 @@ export const authApi = createApi({
 
   tagTypes: ['auth'],
   endpoints: builder => ({
-    // getContacts: builder.query({
-    //   query: () => `/contacts`,
-    //   providesTags: ['contact'],
-    // }),
-
     registerNewUser: builder.mutation({
       query: newUser => ({
         url: '/users/signup',
         method: 'POST',
         data: newUser,
       }),
-      // transformResponse: (response, meta, arg) => {
-      //   console.log(response, arg);
-      //   // console.log(meta);
-      //   // console.log(arg);
-      // },
       invalidatesTags: [{ type: 'auth' }],
     }),
 
-    // deleteContact: builder.mutation({
-    //   query: contactId => ({
-    //     url: `/contacts/${contactId}`,
-    //     method: 'DELETE',
-    //   }),
-    //   invalidatesTags: ['contact'],
-    // }),
+    logInUser: builder.mutation({
+      query: newUser => ({
+        url: '/users/login',
+        method: 'POST',
+        data: newUser,
+      }),
+      invalidatesTags: [{ type: 'auth' }],
+    }),
+
+    logOutUser: builder.mutation({
+      query: () => ({
+        url: '/users/logout',
+        method: 'POST',
+      }),
+      invalidatesTags: [{ type: 'auth' }],
+    }),
   }),
 });
 
-export const { useRegisterNewUserMutation } = authApi;
+export const { useRegisterNewUserMutation, useLogInUserMutation, useLogOutUserMutation } = authApi;
+
+// getContacts: builder.query({
+//   query: () => `/contacts`,
+//   providesTags: ['contact'],
+// }),
+
+// deleteContact: builder.mutation({
+//   query: contactId => ({
+//     url: `/contacts/${contactId}`,
+//     method: 'DELETE',
+//   }),
+//   invalidatesTags: ['contact'],
+// }),
+
+// transformResponse: (response, meta, arg) => {
+//   console.log(response, arg);
+//   // console.log(meta);
+//   // console.log(arg);
+// },

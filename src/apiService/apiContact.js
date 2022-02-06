@@ -5,6 +5,7 @@ export const axiosBaseQuery =
   async ({ url, method, data }) => {
     try {
       const result = await axios({ url: baseUrl + url, method, data });
+      token.set(result.data.token);
       return { data: result.data };
     } catch (axiosError) {
       let err = axiosError;
@@ -13,3 +14,12 @@ export const axiosBaseQuery =
       };
     }
   };
+
+const token = {
+  set(token) {
+    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+  },
+  unset() {
+    axios.defaults.headers.common.Authorization = '';
+  },
+};

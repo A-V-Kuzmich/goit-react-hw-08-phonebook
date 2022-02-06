@@ -4,6 +4,17 @@ $colorAcentText: #87e6d3;
 $timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 $animation-duration: 250ms;
 
+.nav {
+  display: flex;
+  justify-content: space-between;
+  min-height: 64px;
+  padding: 12px 50px;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.7);
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14),
+    0px 1px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
 .link {
   display: inline-block;
   padding: 12px;

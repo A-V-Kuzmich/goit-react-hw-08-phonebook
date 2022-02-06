@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { NotificationError, NotificationSuccess } from '../../components/Notification';
-// import { useCreateContactMutation, useGetContactsQuery } from 'redux/contact/contact-operation';
 import { useRegisterNewUserMutation } from 'redux/auth/auth-operation';
-
 import s from './Register.module.scss';
 
 export default function Register() {

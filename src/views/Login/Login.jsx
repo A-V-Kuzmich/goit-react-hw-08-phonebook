@@ -1,28 +1,25 @@
 import { useState } from 'react';
-import { Notification } from '../../components/Notification';
-import { useCreateContactMutation, useGetContactsQuery } from 'redux/contact/contact-operation';
+import { NotificationSuccess, NotificationError } from '../../components/Notification';
+import { useLogInUserMutation } from 'redux/auth/auth-operation';
 
 import s from './Login.module.scss';
 
 export default function Login() {
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [addContact] = useCreateContactMutation();
-  const { data } = useGetContactsQuery();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const handleSubmitt = e => {
+  const [logIn] = useLogInUserMutation();
+
+  const handleSubmitt = async e => {
     e.preventDefault();
-
-    if (checkName(name)) {
-      return Notification(name);
+    try {
+      await logIn({ email, password }).unwrap();
+      setEmail('');
+      setPassword('');
+      NotificationSuccess('Welcome!', 'Login Successful');
+    } catch (error) {
+      NotificationError(error?.status, 'User data entered incorrectly');
     }
-    addContact({ name, phone });
-    setName('');
-    setPhone('');
-  };
-
-  const checkName = newName => {
-    return data.find(({ name }) => name.toLowerCase() === newName.toLowerCase());
   };
 
   return (
@@ -32,26 +29,25 @@ export default function Login() {
           <input
             className={s.name}
             type="text"
-            name="name"
-            value={name}
-            onChange={({ currentTarget: { value } }) => setName(value)}
-            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+            name="email"
+            value={email}
+            onChange={({ currentTarget: { value } }) => setEmail(value)}
+            title="Email"
             required
-            placeholder="Mail"
+            placeholder="Email"
           />
         </label>
         <label>
           <input
             className={s.number}
-            type="tel"
-            name="number"
-            value={phone}
-            onChange={({ currentTarget: { value } }) => setPhone(value)}
-            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+            type="password"
+            name="password"
+            value={password}
+            onChange={({ currentTarget: { value } }) => setPassword(value)}
+            title="password"
             required
             placeholder="Password"
+            autoComplete="false"
           />
         </label>
 
