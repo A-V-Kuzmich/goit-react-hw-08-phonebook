@@ -1,28 +1,28 @@
 import { useState } from 'react';
-import { Notification } from '../../components/Notification';
-import { useCreateContactMutation, useGetContactsQuery } from 'redux/contact/contact-operation';
+import { NotificationError, NotificationSuccess } from '../../components/Notification';
+// import { useCreateContactMutation, useGetContactsQuery } from 'redux/contact/contact-operation';
+import { useRegisterNewUserMutation } from 'redux/auth/auth-operation';
 
 import s from './Register.module.scss';
 
 export default function Register() {
   const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [addContact] = useCreateContactMutation();
-  const { data } = useGetContactsQuery();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const handleSubmitt = e => {
+  const [redistrationNewUser] = useRegisterNewUserMutation();
+
+  const handleSubmitt = async e => {
     e.preventDefault();
-
-    if (checkName(name)) {
-      return Notification(name);
+    try {
+      await redistrationNewUser({ name, email, password }).unwrap();
+      setName('');
+      setEmail('');
+      setPassword('');
+      NotificationSuccess('success!');
+    } catch (error) {
+      NotificationError(error?.status, error?.data?._message);
     }
-    addContact({ name, phone });
-    setName('');
-    setPhone('');
-  };
-
-  const checkName = newName => {
-    return data.find(({ name }) => name.toLowerCase() === newName.toLowerCase());
   };
 
   return (
@@ -44,30 +44,28 @@ export default function Register() {
         <label>
           <input
             className={s.name}
-            type="text"
-            name="name"
-            value={name}
-            onChange={({ currentTarget: { value } }) => setName(value)}
-            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+            type="email"
+            name="email"
+            value={email}
+            onChange={({ currentTarget: { value } }) => setEmail(value)}
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             required
-            placeholder="Mail"
+            placeholder="Email"
           />
         </label>
         <label>
           <input
             className={s.number}
-            type="tel"
-            name="number"
-            value={phone}
-            onChange={({ currentTarget: { value } }) => setPhone(value)}
-            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+            type="password"
+            name="password"
+            value={password}
+            onChange={({ currentTarget: { value } }) => setPassword(value)}
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
             placeholder="Password"
+            autoComplete="false"
           />
         </label>
-
         <button type="submit" className={s.button}>
           Join
         </button>
