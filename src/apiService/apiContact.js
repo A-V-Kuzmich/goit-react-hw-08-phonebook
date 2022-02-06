@@ -5,7 +5,7 @@ export const axiosBaseQuery =
   async ({ url, method, data }) => {
     try {
       const result = await axios({ url: baseUrl + url, method, data });
-      token.set(result.data.token);
+      setToken(url, result.data.token);
       return { data: result.data };
     } catch (axiosError) {
       let err = axiosError;
@@ -15,11 +15,21 @@ export const axiosBaseQuery =
     }
   };
 
-const token = {
-  set(token) {
+function setToken(url, token) {
+  if (url === '/users/login' || url === '/users/signup') {
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-  },
-  unset() {
+    console.log('add');
+  }
+  if (url === '/users/logout') {
     axios.defaults.headers.common.Authorization = '';
-  },
-};
+    console.log('reset');
+  }
+}
+// const token = {
+//   set(token) {
+//     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+//   },
+//   // unset() {
+//   //   axios.defaults.headers.common.Authorization = '';
+//   // },
+// };

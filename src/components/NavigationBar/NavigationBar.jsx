@@ -1,7 +1,7 @@
 import UserMenu from 'components/UserMenu/UserMenu';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { getIsLoggedIn } from 'redux/auth/auth-selectors';
+import { getIsLoggedIn } from 'redux/auth/authSelectors';
 import s from './NavigationBar.module.scss';
 import NavigationAuth from './NavigationAuth';
 

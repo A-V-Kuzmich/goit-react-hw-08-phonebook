@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { NotificationSuccess, NotificationError } from '../../components/Notification';
-import { useLogInUserMutation } from 'redux/auth/auth-operation';
+import { useLogInUserMutation } from 'redux/auth/authOperation';
+import { useNavigate } from 'react-router-dom';
 
 import s from './Login.module.scss';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const [logIn] = useLogInUserMutation();
 
@@ -17,6 +19,7 @@ export default function Login() {
       setEmail('');
       setPassword('');
       NotificationSuccess('Welcome!', 'Login Successful');
+      navigate('/contacts');
     } catch (error) {
       NotificationError(error?.status, 'User data entered incorrectly');
     }

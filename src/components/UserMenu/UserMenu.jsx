@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
-import { useLogOutUserMutation } from 'redux/auth/auth-operation';
-import { getUserName } from 'redux/auth/auth-selectors';
+import { useLogOutUserMutation } from 'redux/auth/authOperation';
+import { getUserName } from 'redux/auth/authSelectors';
 import s from './UserMenu.module.scss';
 
 export default function UserMenu() {

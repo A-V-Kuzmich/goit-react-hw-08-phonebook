@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { NotificationError, NotificationSuccess } from '../../components/Notification';
-import { useRegisterNewUserMutation } from 'redux/auth/auth-operation';
+import { useRegisterNewUserMutation } from 'redux/auth/authOperation';
+import { useNavigate } from 'react-router-dom';
 import s from './Register.module.scss';
 
 export default function Register() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const [redistrationNewUser] = useRegisterNewUserMutation();
 
@@ -18,6 +20,7 @@ export default function Register() {
       setEmail('');
       setPassword('');
       NotificationSuccess('success!');
+      navigate('/contacts');
     } catch (error) {
       NotificationError(error?.status, error?.data?._message);
     }

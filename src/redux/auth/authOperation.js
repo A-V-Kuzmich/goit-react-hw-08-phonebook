@@ -10,21 +10,21 @@ export const authApi = createApi({
   tagTypes: ['auth'],
   endpoints: builder => ({
     registerNewUser: builder.mutation({
-      query: newUser => ({
+      query: data => ({
         url: '/users/signup',
         method: 'POST',
-        data: newUser,
+        data,
       }),
-      invalidatesTags: [{ type: 'auth' }],
+      invalidatesTags: ['auth'],
     }),
 
     logInUser: builder.mutation({
-      query: newUser => ({
+      query: data => ({
         url: '/users/login',
         method: 'POST',
-        data: newUser,
+        data,
       }),
-      invalidatesTags: [{ type: 'auth' }],
+      invalidatesTags: ['auth'],
     }),
 
     logOutUser: builder.mutation({
@@ -32,7 +32,7 @@ export const authApi = createApi({
         url: '/users/logout',
         method: 'POST',
       }),
-      invalidatesTags: [{ type: 'auth' }],
+      invalidatesTags: ['auth'],
     }),
   }),
 });

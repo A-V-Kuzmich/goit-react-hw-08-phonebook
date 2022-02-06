@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { Notification } from '../../../components/Notification';
+import { NotificationWarning } from '../../../components/Notification';
 import { useCreateContactMutation, useGetContactsQuery } from 'redux/contact/contact-operation';
 
 import s from './Form.module.scss';
 
 export default function Form() {
   const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+  const [number, setNumber] = useState('');
   const [addContact] = useCreateContactMutation();
   const { data } = useGetContactsQuery();
 
@@ -14,11 +14,11 @@ export default function Form() {
     e.preventDefault();
 
     if (checkName(name)) {
-      return Notification(name);
+      return NotificationWarning(name, 'is already in contacts.');
     }
-    addContact({ name, phone });
+    addContact({ name, number });
     setName('');
-    setPhone('');
+    setNumber('');
   };
 
   const checkName = newName => {
@@ -46,8 +46,8 @@ export default function Form() {
             className={s.number}
             type="tel"
             name="number"
-            value={phone}
-            onChange={({ currentTarget: { value } }) => setPhone(value)}
+            value={number}
+            onChange={({ currentTarget: { value } }) => setNumber(value)}
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required

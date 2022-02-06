@@ -1,23 +1,30 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
+import { axiosBaseQuery } from 'apiService/apiContact';
 
 export const contactApi = createApi({
   reducerPath: 'contactApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://61f6e0fe2e1d7e0017fd6f86.mockapi.io' }),
+  baseQuery: axiosBaseQuery({
+    baseUrl: 'https://connections-api.herokuapp.com',
+  }),
 
-  tagTypes: ['contact'],
+  tagTypes: ['Post'],
   endpoints: builder => ({
     getContacts: builder.query({
-      query: () => `/contacts`,
-      providesTags: ['contact'],
+      query: () => ({
+        url: '/contacts',
+        method: 'GET',
+      }),
+      providesTags: (result, error, arg) =>
+        result ? [...result.map(({ id }) => ({ type: 'Post', id })), 'Post'] : ['Post'],
     }),
 
     createContact: builder.mutation({
-      query: newContact => ({
+      query: data => ({
         url: '/contacts',
         method: 'POST',
-        body: newContact,
+        data,
       }),
-      invalidatesTags: ['contact'],
+      invalidatesTags: ['Post'],
     }),
 
     deleteContact: builder.mutation({
@@ -25,7 +32,7 @@ export const contactApi = createApi({
         url: `/contacts/${contactId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['contact'],
+      invalidatesTags: ['Post'],
     }),
   }),
 });

@@ -4,16 +4,21 @@ import { useGetContactsQuery } from '../../../redux/contact/contact-operation';
 import { TailSpin } from 'react-loader-spinner';
 import { getFilter } from '../../../redux/contact/contact-selectors';
 import { useMemo } from 'react';
+import { useEffect } from 'react';
 
 import s from './ContactList.module.scss';
 
 export default function ContactList() {
-  const { data, isFetching, isError } = useGetContactsQuery();
+  const { data, isFetching, isError, refetch } = useGetContactsQuery();
   const filterValue = useSelector(getFilter);
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   const filter = useMemo(() => {
     if (!data) {
-      return;
+      return [];
     }
     const normalizeFilter = filterValue.toLowerCase();
     return data.filter(({ name }) => name.toLowerCase().includes(normalizeFilter));

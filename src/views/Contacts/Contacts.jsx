@@ -3,7 +3,7 @@ import Form from './Form/Form';
 import ContactList from './ContactList/ContactList';
 import s from './Contacts.module.scss';
 import { useSelector } from 'react-redux';
-import { getIsLoggedIn } from 'redux/auth/auth-selectors';
+import { getIsLoggedIn } from 'redux/auth/authSelectors';
 
 export default function Contacts() {
   const logget = useSelector(getIsLoggedIn);

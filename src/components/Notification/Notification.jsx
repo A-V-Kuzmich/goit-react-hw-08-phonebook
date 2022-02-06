@@ -10,11 +10,11 @@ export function NotificationError(message, text) {
     timer: 2000,
   });
 }
-export function Notification(message, text) {
+export function NotificationWarning(message, text) {
   allert({
     title: message ? message : '',
     text: text ? text : '',
-    icon: 'success',
+    icon: 'warning',
     button: false,
     timer: 2000,
   });
@@ -33,7 +33,7 @@ export function NotificationSuccess(message, text) {
 // icon: 'success',
 // icon: 'warning',
 
-Notification.propTypes = {
+NotificationWarning.propTypes = {
   message: PropTypes.string,
   text: PropTypes.string,
 };
