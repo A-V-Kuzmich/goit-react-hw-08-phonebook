@@ -4,10 +4,17 @@ import Login from 'views/Login';
 import Register from 'views/Register';
 import NavigationBar from 'components/NavigationBar/NavigationBar';
 import { Route, Routes } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useCurrentUserQuery } from 'redux/auth/authOperation';
 
 // import s from './App.module.scss';
 
 export default function App() {
+  const { data, refetch } = useCurrentUserQuery();
+  console.log(data);
+  useEffect(() => {
+    refetch();
+  }, []);
   return (
     <>
       <header>

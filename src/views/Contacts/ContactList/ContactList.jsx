@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
 import ContactItem from './ContactItem/ContactItem';
-import { useGetContactsQuery } from '../../../redux/contact/contact-operation';
+import { useGetContactsQuery } from 'redux/contact/contact-operation';
 import { TailSpin } from 'react-loader-spinner';
-import { getFilter } from '../../../redux/contact/contact-selectors';
+import { getFilter } from 'redux/contact/contact-selectors';
 import { useMemo } from 'react';
 import { useEffect } from 'react';
 
@@ -11,7 +11,7 @@ import s from './ContactList.module.scss';
 export default function ContactList() {
   const { data, isFetching, isError, refetch } = useGetContactsQuery();
   const filterValue = useSelector(getFilter);
-
+  console.log(data);
   useEffect(() => {
     refetch();
   }, [refetch]);

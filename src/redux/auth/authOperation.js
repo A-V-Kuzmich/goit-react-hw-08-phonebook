@@ -1,10 +1,14 @@
 import { createApi /* fetchBaseQuery */ } from '@reduxjs/toolkit/query/react';
 import { axiosBaseQuery } from 'apiService/apiContact';
+import axios from 'axios';
+
+const url = 'https://connections-api.herokuapp.com';
 
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: axiosBaseQuery({
-    baseUrl: 'https://connections-api.herokuapp.com',
+    baseUrl: url,
+    refetchOnReconnect: true,
   }),
 
   tagTypes: ['auth'],
@@ -34,10 +38,30 @@ export const authApi = createApi({
       }),
       invalidatesTags: ['auth'],
     }),
+
+    currentUser: builder.query({
+      async queryFn(arg, { getState }, extraOptions, baseQuery) {
+        const state = getState().auth.token;
+        axios.defaults.headers.common.Authorization = `Bearer ${state}`;
+        try {
+          const result = await baseQuery({ url: '/users/current', metod: 'GET' });
+          console.log(result);
+          return { data: result };
+        } catch (axiosError) {
+          const err = axiosError;
+          return { error: { status: err.response?.status, data: err.response?.data } };
+        }
+      },
+    }),
   }),
 });
 
-export const { useRegisterNewUserMutation, useLogInUserMutation, useLogOutUserMutation } = authApi;
+export const {
+  useRegisterNewUserMutation,
+  useLogInUserMutation,
+  useLogOutUserMutation,
+  useCurrentUserQuery,
+} = authApi;
 
 // getContacts: builder.query({
 //   query: () => `/contacts`,
@@ -57,3 +81,19 @@ export const { useRegisterNewUserMutation, useLogInUserMutation, useLogOutUserMu
 //   // console.log(meta);
 //   // console.log(arg);
 // },
+
+/* 
+{error: {…}}
+error:{
+  data:{
+    message: "Please authenticate"
+  }
+  status: 401
+}
+
+{
+  data:{
+email: "77dfhtdrth7@mail.com"
+name: "tgfybjhtfhytf"}
+}
+*/
