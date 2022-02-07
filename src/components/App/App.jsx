@@ -10,11 +10,11 @@ import { useCurrentUserQuery } from 'redux/auth/authOperation';
 // import s from './App.module.scss';
 
 export default function App() {
-  const { data, refetch } = useCurrentUserQuery();
-  console.log(data);
+  const { refetch } = useCurrentUserQuery();
+
   useEffect(() => {
     refetch();
-  }, []);
+  }, [refetch]);
   return (
     <>
       <header>

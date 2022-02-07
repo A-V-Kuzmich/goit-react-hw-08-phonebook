@@ -11,7 +11,6 @@ import s from './ContactList.module.scss';
 export default function ContactList() {
   const { data, isFetching, isError, refetch } = useGetContactsQuery();
   const filterValue = useSelector(getFilter);
-  console.log(data);
   useEffect(() => {
     refetch();
   }, [refetch]);

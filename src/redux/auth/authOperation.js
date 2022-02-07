@@ -1,4 +1,4 @@
-import { createApi /* fetchBaseQuery */ } from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
 import { axiosBaseQuery } from 'apiService/apiContact';
 import axios from 'axios';
 
@@ -42,16 +42,19 @@ export const authApi = createApi({
     currentUser: builder.query({
       async queryFn(arg, { getState }, extraOptions, baseQuery) {
         const state = getState().auth.token;
+        if (!state) {
+          return { error: { status: '401', data: 'Please authenticate' } };
+        }
         axios.defaults.headers.common.Authorization = `Bearer ${state}`;
         try {
           const result = await baseQuery({ url: '/users/current', metod: 'GET' });
-          console.log(result);
           return { data: result };
         } catch (axiosError) {
           const err = axiosError;
           return { error: { status: err.response?.status, data: err.response?.data } };
         }
       },
+      invalidatesTags: ['auth'],
     }),
   }),
 });
@@ -62,38 +65,3 @@ export const {
   useLogOutUserMutation,
   useCurrentUserQuery,
 } = authApi;
-
-// getContacts: builder.query({
-//   query: () => `/contacts`,
-//   providesTags: ['contact'],
-// }),
-
-// deleteContact: builder.mutation({
-//   query: contactId => ({
-//     url: `/contacts/${contactId}`,
-//     method: 'DELETE',
-//   }),
-//   invalidatesTags: ['contact'],
-// }),
-
-// transformResponse: (response, meta, arg) => {
-//   console.log(response, arg);
-//   // console.log(meta);
-//   // console.log(arg);
-// },
-
-/* 
-{error: {…}}
-error:{
-  data:{
-    message: "Please authenticate"
-  }
-  status: 401
-}
-
-{
-  data:{
-email: "77dfhtdrth7@mail.com"
-name: "tgfybjhtfhytf"}
-}
-*/

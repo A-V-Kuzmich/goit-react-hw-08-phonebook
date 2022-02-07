@@ -25,11 +25,3 @@ function setToken(url, token) {
     console.log('reset');
   }
 }
-// const token = {
-//   set(token) {
-//     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-//   },
-//   // unset() {
-//   //   axios.defaults.headers.common.Authorization = '';
-//   // },
-// };
