@@ -1,13 +1,13 @@
-import Contacts from 'views/Contacts/Contacts';
-import Home from 'views/Home/Home';
+import Home from 'views/Home';
 import Login from 'views/Login';
+import Contacts from 'views/Contacts';
 import Register from 'views/Register';
-import NavigationBar from 'components/NavigationBar/NavigationBar';
-import { Route, Routes } from 'react-router-dom';
+import NavigationBar from 'components/NavigationBar';
 import { useEffect } from 'react';
+import { Route, Routes, Navigate, Outlet } from 'react-router-dom';
 import { useCurrentUserQuery } from 'redux/auth/authOperation';
-
-// import s from './App.module.scss';
+import { useSelector } from 'react-redux';
+import { getIsLoggedIn } from 'redux/auth/authSelectors';
 
 export default function App() {
   const { refetch } = useCurrentUserQuery();
@@ -15,6 +15,7 @@ export default function App() {
   useEffect(() => {
     refetch();
   }, [refetch]);
+
   return (
     <>
       <header>
@@ -23,11 +24,30 @@ export default function App() {
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/contacts" element={<Contacts />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/contacts" element={<PrivateOutlet />}>
+            <Route path="" element={<Contacts />} />
+          </Route>
+          <Route path="/register" element={<PublicOutlet />}>
+            <Route path="" element={<Register />} />
+          </Route>
+          <Route path="/login" element={<PublicOutlet />}>
+            <Route path="" element={<Login />} />
+          </Route>
+          <Route path="*" elements={<Navigate to="/" />} />
         </Routes>
       </main>
     </>
   );
+}
+function PrivateOutlet() {
+  const auth = useAuth();
+  return auth ? <Outlet /> : <Navigate to="/login" />;
+}
+function PublicOutlet() {
+  const auth = useAuth();
+  return !auth ? <Outlet /> : <Navigate to="/" />;
+}
+function useAuth() {
+  const logget = useSelector(getIsLoggedIn);
+  return logget;
 }

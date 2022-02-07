@@ -24,7 +24,6 @@ export default function NavigationBar() {
         )}
       </div>
       {!logget && <NavigationAuth />}
-
       {logget && <UserMenu />}
     </nav>
   );

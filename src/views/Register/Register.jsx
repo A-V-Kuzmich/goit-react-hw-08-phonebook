@@ -20,7 +20,7 @@ export default function Register() {
       setEmail('');
       setPassword('');
       NotificationSuccess('success!');
-      navigate('/contacts');
+      navigate('/contacts', { replace: true });
     } catch (error) {
       NotificationError(error?.status, error?.data?._message);
     }

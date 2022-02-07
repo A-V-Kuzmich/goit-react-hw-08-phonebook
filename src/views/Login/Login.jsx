@@ -19,7 +19,7 @@ export default function Login() {
       setEmail('');
       setPassword('');
       NotificationSuccess('Welcome!', 'Login Successful');
-      navigate('/contacts');
+      navigate('/contacts', { replace: true });
     } catch (error) {
       NotificationError(error?.status, 'User data entered incorrectly');
     }
