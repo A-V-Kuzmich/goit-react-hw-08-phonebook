@@ -3,7 +3,7 @@ import Login from 'views/Login';
 import Contacts from 'views/Contacts';
 import Register from 'views/Register';
 import NavigationBar from 'components/NavigationBar';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes, Navigate, Outlet } from 'react-router-dom';
 import { useCurrentUserQuery } from 'redux/auth/authOperation';
 import { useSelector } from 'react-redux';
@@ -45,7 +45,7 @@ function PrivateOutlet() {
 }
 function PublicOutlet() {
   const auth = useAuth();
-  return !auth ? <Outlet /> : <Navigate to="/" />;
+  return !auth ? <Outlet /> : <Navigate to="/contacts" />;
 }
 function useAuth() {
   const logget = useSelector(getIsLoggedIn);

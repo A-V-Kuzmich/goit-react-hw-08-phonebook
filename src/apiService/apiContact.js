@@ -18,10 +18,8 @@ export const axiosBaseQuery =
 function setToken(url, token) {
   if (url === '/users/login' || url === '/users/signup') {
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-    console.log('add');
   }
   if (url === '/users/logout') {
     axios.defaults.headers.common.Authorization = '';
-    console.log('reset');
   }
 }

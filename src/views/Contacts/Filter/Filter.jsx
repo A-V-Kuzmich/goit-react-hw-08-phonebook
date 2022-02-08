@@ -1,14 +1,15 @@
 import { useSelector, useDispatch } from 'react-redux';
-import actions from '../../../redux/contact/contact-actions';
-import { getFilter } from '../../../redux/contact/contact-selectors';
+import { getFilter } from 'redux/contact/contact-selectors';
+import { filterContact } from 'redux/contact/contactsSlice';
 
 import s from './Filter.module.scss';
 
 export default function Filter() {
   const value = useSelector(getFilter);
   const dispatch = useDispatch();
-  const filterContacts = ({ currentTarget: { value: filter } }) =>
-    dispatch(actions.filterContact(filter));
+  const filterContacts = ({ currentTarget: { value: filter } }) => {
+    dispatch(filterContact(filter));
+  };
 
   return (
     <label className={s.filter}>

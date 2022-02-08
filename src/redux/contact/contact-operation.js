@@ -5,6 +5,7 @@ export const contactApi = createApi({
   reducerPath: 'contactApi',
   baseQuery: axiosBaseQuery({
     baseUrl: 'https://connections-api.herokuapp.com',
+    refetchOnReconnect: true,
   }),
 
   tagTypes: ['Post'],

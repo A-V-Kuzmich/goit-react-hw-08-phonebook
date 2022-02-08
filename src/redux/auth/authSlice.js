@@ -5,6 +5,7 @@ const initialState = {
   user: { name: null, email: null },
   token: null,
   isLoggedIn: false,
+  isFetchingCurrentUser: false,
 };
 
 const authSlice = createSlice({
@@ -28,9 +29,16 @@ const authSlice = createSlice({
         state.token = null;
         state.isLoggedIn = false;
       })
+      .addMatcher(authApi.endpoints.currentUser.matchPending, (state, action) => {
+        state.isFetchingCurrentUser = true;
+      })
       .addMatcher(authApi.endpoints.currentUser.matchFulfilled, (state, { payload }) => {
         state.user = { ...payload.data };
         state.isLoggedIn = true;
+        state.isFetchingCurrentUser = false;
+      })
+      .addMatcher(authApi.endpoints.currentUser.matchRejected, (state, action) => {
+        state.isFetchingCurrentUser = false;
       });
   },
 });

@@ -8,7 +8,6 @@ export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: axiosBaseQuery({
     baseUrl: url,
-    refetchOnReconnect: true,
   }),
 
   tagTypes: ['auth'],
@@ -19,7 +18,6 @@ export const authApi = createApi({
         method: 'POST',
         data,
       }),
-      invalidatesTags: ['auth'],
     }),
 
     logInUser: builder.mutation({
@@ -28,7 +26,6 @@ export const authApi = createApi({
         method: 'POST',
         data,
       }),
-      invalidatesTags: ['auth'],
     }),
 
     logOutUser: builder.mutation({
@@ -36,14 +33,13 @@ export const authApi = createApi({
         url: '/users/logout',
         method: 'POST',
       }),
-      invalidatesTags: ['auth'],
     }),
 
     currentUser: builder.query({
       async queryFn(arg, { getState }, extraOptions, baseQuery) {
         const state = getState().auth.token;
         if (!state) {
-          return { error: { status: '401', data: 'Please authenticate' } };
+          return { error: { status: '401', data: 'Please authenticate...' } };
         }
         axios.defaults.headers.common.Authorization = `Bearer ${state}`;
         try {
@@ -54,7 +50,6 @@ export const authApi = createApi({
           return { error: { status: err.response?.status, data: err.response?.data } };
         }
       },
-      invalidatesTags: ['auth'],
     }),
   }),
 });
