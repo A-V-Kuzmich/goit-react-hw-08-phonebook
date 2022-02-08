@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import ContactItem from './ContactItem/ContactItem';
+import ContactItem from './ContactItem';
 import { useGetContactsQuery } from 'redux/contact/contact-operation';
 import { TailSpin } from 'react-loader-spinner';
 import { getFilter } from 'redux/contact/contact-selectors';

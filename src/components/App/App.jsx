@@ -1,7 +1,7 @@
-import Home from 'views/Home';
-import Login from 'views/Login';
-import Contacts from 'views/Contacts';
-import Register from 'views/Register';
+import Home from 'components/views/Home';
+import Login from 'components/views/Login';
+import Contacts from 'components/views/Contacts';
+import Register from 'components/views/Register';
 import NavigationBar from 'components/NavigationBar';
 import React, { useEffect } from 'react';
 import { Route, Routes, Navigate, Outlet } from 'react-router-dom';

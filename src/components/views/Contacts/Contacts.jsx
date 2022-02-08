@@ -1,6 +1,6 @@
-import Filter from './Filter/Filter';
-import Form from './Form/Form';
-import ContactList from './ContactList/ContactList';
+import Filter from './Filter';
+import Form from './Form';
+import ContactList from './ContactList';
 import s from './Contacts.module.scss';
 
 export default function Contacts() {

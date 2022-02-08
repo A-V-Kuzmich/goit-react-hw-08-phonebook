@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { NotificationSuccess, NotificationError } from '../../components/Notification';
+import { NotificationSuccess, NotificationError } from 'components/Notification';
 import { useLogInUserMutation } from 'redux/auth/authOperation';
 import { useNavigate } from 'react-router-dom';
 

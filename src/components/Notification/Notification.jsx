@@ -29,10 +29,6 @@ export function NotificationSuccess(message, text) {
   });
 }
 
-// position: 'top-end',
-// icon: 'success',
-// icon: 'warning',
-
 NotificationWarning.propTypes = {
   message: PropTypes.string,
   text: PropTypes.string,
